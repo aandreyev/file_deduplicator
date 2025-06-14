@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # --- Configuration ---
 # Match these with your deduplicator.py and Supabase setup
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
-SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY") # Use Service Role Key for updates
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY") # Changed from SUPABASE_SERVICE_ROLE_KEY
 TABLE_NAME = "documents" 
 TEXT_COLUMN = "extracted_content"
 ID_COLUMN = "id"

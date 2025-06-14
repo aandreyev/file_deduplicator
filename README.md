@@ -53,7 +53,7 @@ This project provides a suite of tools to identify, manage, and remove duplicate
     cd /path/to/file_deduplicator
     doppler setup
     ```
-    Follow the prompts to select your organization, project (the one containing `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`), and config.
+    Follow the prompts to select your organization, project (the one containing `SUPABASE_URL` and `SUPABASE_KEY`), and config. This is the 'sharepoint_extract' project.
 
 4.  **Create and Activate Virtual Environment:**
     The `setup_venv.sh` script will create a Python virtual environment (named `venv` by default) and install the required dependencies from `requirements.txt`.
@@ -66,15 +66,15 @@ This project provides a suite of tools to identify, manage, and remove duplicate
     ```
 
 5.  **Configure Environment Variables:**
-    Copy the `.env.example` file to `.env` and fill in your Supabase project details:
+    If you are not using Doppler, then you will need to copy the `.env.example` file to `.env` and fill in your Supabase project details:
     ```bash
     cp .env.example .env
     ```
     Edit `.env` and provide:
     *   `SUPABASE_URL`: Your Supabase project URL.
-    *   `SUPABASE_SERVICE_ROLE_KEY`: Your Supabase service role key (this is required for operations like updating and deleting data, and for the backfill and purge scripts).
+    *   `SUPABASE_KEY`: Your Supabase service role key (this is required for operations like updating and deleting data, and for the backfill and purge scripts).
     ```
-    Your Supabase secrets (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`) should be managed in the Doppler project you linked in step 3. The Python scripts will automatically have access to these as environment variables when run via the Doppler CLI.
+    Your Supabase secrets (`SUPABASE_URL`, `SUPABASE_KEY`) should be managed in the Doppler project you linked in step 3. The Python scripts will automatically have access to these as environment variables when run via the Doppler CLI.
 
 ## Usage
 
@@ -141,15 +141,15 @@ This script will:
 ### Environment Variables (`.env` file)
 
 *   `SUPABASE_URL`: (Required) The URL of your Supabase project.
-*   `SUPABASE_SERVICE_ROLE_KEY`: (Required) The service role API key for your Supabase project. This key has elevated privileges and should be kept secret.
+*   `SUPABASE_KEY`: (Required) The service role API key for your Supabase project. This key has elevated privileges and should be kept secret.
 
 ### Secrets Management (Doppler)
 
 This project uses Doppler for managing secrets such as:
 *   `SUPABASE_URL`: Your Supabase project URL.
-*   `SUPABASE_SERVICE_ROLE_KEY`: Your Supabase service role key.
+*   `SUPABASE_KEY`: Your Supabase service role key (or the general API key if service role is not specifically used/needed by all scripts, ensure it has sufficient permissions).
 
-These secrets are injected as environment variables at runtime by the Doppler CLI. Ensure you have run `doppler setup` in the project's root directory to link it to the correct Doppler project and configuration.
+These secrets are injected as environment variables at runtime by the Doppler CLI. Ensure you have run `doppler setup` in the project\'s root directory to link it to the correct Doppler project and configuration.
 The `.env` file is no longer used.
 
 ### Script Configuration

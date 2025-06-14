@@ -14,7 +14,7 @@ st.set_page_config(layout="wide") # MUST be the first Streamlit command
 
 # --- Configuration ---
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
-SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY") # Changed from SUPABASE_SERVICE_ROLE_KEY
 TABLE_NAME = "documents" # TODO: Make this configurable or fetch dynamically
 TEXT_COLUMN = "extracted_content"   # Column containing the document text (needed for display)
 ID_COLUMN = "id"          # Primary key column
@@ -543,44 +543,44 @@ if supabase:
 
         # --- Auto-process Perfect Matches ---
         if perfect_matches and st.sidebar.button("⚡️ Auto-process Perfect Matches"):
-            ids_to_delete = set()
-            processed_perfect_pairs = 0
+            ids_to_delete = set();
+            processed_perfect_pairs = 0;
             with st.spinner(f"Identifying older documents in {len(perfect_matches)} perfect matches..."):
                 for pair_idx, pair in enumerate(perfect_matches):
                     older_id = get_older_doc_id(pair["doc1_meta"], pair["doc2_meta"])
                     if older_id:
-                        ids_to_delete.add(older_id)
+                        ids_to_delete.add(older_id);
                     # We consider the pair processed even if older couldn't be determined
-                    processed_perfect_pairs += 1
+                    processed_perfect_pairs += 1;
             
-            st.info(f"Identified {len(ids_to_delete)} unique older documents to delete from {processed_perfect_pairs} perfect matches.")
+            st.info(f"Identified {len(ids_to_delete)} unique older documents to delete from {processed_perfect_pairs} perfect matches.");
 
             if ids_to_delete:
-                auto_deleted_count = 0
-                failed_deletions = []
-                delete_progress = st.progress(0)
+                auto_deleted_count = 0;
+                failed_deletions = [];
+                delete_progress = st.progress(0);
                 with st.spinner(f"Attempting to auto-delete {len(ids_to_delete)} older documents..."):
                     for i, older_id in enumerate(ids_to_delete):
                         if soft_delete_document(supabase, older_id):
-                            auto_deleted_count += 1
+                            auto_deleted_count += 1;
                             st.session_state.auto_deleted_ids.add(older_id) # Track success
                         else:
-                            failed_deletions.append(older_id)
-                        delete_progress.progress((i + 1) / len(ids_to_delete))
-                delete_progress.empty()
+                            failed_deletions.append(older_id);
+                        delete_progress.progress((i + 1) / len(ids_to_delete));
+                delete_progress.empty();
 
                 if auto_deleted_count > 0:
-                    st.success(f"✅ Automatically soft-deleted {auto_deleted_count} older documents from perfect matches.")
+                    st.success(f"✅ Automatically soft-deleted {auto_deleted_count} older documents from perfect matches.");
                     # Clear cache to reflect deletions in subsequent steps/runs
-                    st.cache_data.clear()
+                    st.cache_data.clear();
                     # Rerun only if auto-delete happened to refresh the state cleanly
-                    st.info("Refreshing data after auto-deletion...")
-                    st.rerun() 
+                    st.info("Refreshing data after auto-deletion...");
+                    st.rerun(); 
 
                 if failed_deletions:
-                    st.error(f"❌ Failed to auto-delete {len(failed_deletions)} documents: {failed_deletions}")
+                    st.error(f"❌ Failed to auto-delete {len(failed_deletions)} documents: {failed_deletions}");
             else:
-                 st.warning("Could not identify any older documents to delete automatically (check timestamps?).")
+                 st.warning("Could not identify any older documents to delete automatically (check timestamps?).");
 
         
         # Filter out pairs where one document was *just* auto-deleted in this run

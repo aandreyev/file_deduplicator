@@ -1,3 +1,8 @@
+
+# chmod +x setup_venv.sh
+# Usage: ./setup_venv.sh
+# This script sets up a Python virtual environment and installs dependencies from requirements.txt
+
 #!/bin/bash
 
 # Define the virtual environment directory name

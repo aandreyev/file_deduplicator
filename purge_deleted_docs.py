@@ -31,7 +31,7 @@ if args.dry_run:
 
 # --- Configuration ---
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
-SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY") # MUST be Service Role Key
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY") # Changed from SUPABASE_SERVICE_ROLE_KEY
 DOCUMENTS_TABLE = "documents"
 PROCESSED_TABLE = "processed_duplicates"
 STORAGE_BUCKET = "documents" # As provided by user
