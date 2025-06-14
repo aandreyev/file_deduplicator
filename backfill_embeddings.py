@@ -1,6 +1,5 @@
 import os
 import sys
-from dotenv import load_dotenv
 from supabase import create_client, Client
 from sentence_transformers import SentenceTransformer
 import numpy as np
@@ -8,10 +7,6 @@ import logging
 
 # --- Setup Logging ---
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
-# --- Load Environment Variables ---
-load_dotenv()
-logging.info("Loaded environment variables.")
 
 # --- Configuration ---
 # Match these with your deduplicator.py and Supabase setup
@@ -136,4 +131,4 @@ def backfill():
     logging.info(f"Embedding backfill process completed. Total documents updated: {total_processed}")
 
 if __name__ == "__main__":
-    backfill() 
+    backfill()

@@ -2,7 +2,6 @@ import os
 import sys
 import argparse
 import logging
-from dotenv import load_dotenv
 from supabase import create_client, Client
 from supabase.lib.client_options import ClientOptions
 from postgrest.exceptions import APIError # To catch specific DB errors like unique constraints
@@ -29,10 +28,6 @@ if args.dry_run:
     logging.warning("---------- DRY RUN MODE ACTIVATED ----------")
     logging.warning("No files or database records will be deleted.")
     logging.warning("------------------------------------------")
-
-# --- Load Environment Variables ---
-load_dotenv()
-logging.info("Loaded environment variables.")
 
 # --- Configuration ---
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
@@ -251,4 +246,4 @@ def purge_deleted_documents():
          logging.warning("REMINDER: This was a DRY RUN. No actual changes were made.")
 
 if __name__ == "__main__":
-    purge_deleted_documents() 
+    purge_deleted_documents()

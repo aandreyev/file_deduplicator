@@ -1,6 +1,5 @@
 import os
 import streamlit as st
-from dotenv import load_dotenv
 from supabase import create_client, Client
 from sentence_transformers import util
 import numpy as np
@@ -12,9 +11,6 @@ import subprocess # Add subprocess import
 import sys # Add sys import
 
 st.set_page_config(layout="wide") # MUST be the first Streamlit command
-
-# Load environment variables
-load_dotenv()
 
 # --- Configuration ---
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
@@ -605,4 +601,4 @@ if supabase:
         st.warning("No documents with embeddings found or fetched. Please run the `backfill_embeddings.py` script.")
 
 else:
-    st.error("Supabase client not initialized.") 
+    st.error("Supabase client not initialized.")
